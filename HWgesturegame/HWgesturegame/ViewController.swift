@@ -19,19 +19,18 @@ class ViewController: UIViewController {
         }()
     var circleView: UIView = {
             let circle = UIView()
-          //  circle.backgroundColor = .systemPink
             return circle
         }()
     
     let tapGesture = UITapGestureRecognizer()
-  //  let longPressGesture = UILongPressGestureRecognizer()
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .lightGray
         setConstraints()
-    //    createCircleView()
+        
         myButton.addTarget(self, action: #selector(myButtonTapped), for: .touchUpInside)
         
     }
@@ -42,28 +41,27 @@ class ViewController: UIViewController {
     }
     
     @objc func circleTapped(_ gesture: UITapGestureRecognizer) {
-            circleView.removeFromSuperview()
-
+        circleView.removeFromSuperview()
+        
         let safeAreaWidth = Int(view.safeAreaLayoutGuide.layoutFrame.size.width /*- myButton.widthAnchor)*/)
         let smth = Int(myButton.frame.maxY)
-            let safeAreaHeight = Int(view.safeAreaLayoutGuide.layoutFrame.maxY)
+        let safeAreaHeight = Int(view.safeAreaLayoutGuide.layoutFrame.maxY)
         
-
-            let circleSide = Int(circleView.bounds.size.width)
-
-            circleView.frame = CGRect(x: Int.random(in: 1 ..< (safeAreaWidth - circleSide)), y: Int.random(in: (smth + circleSide) ..< (safeAreaHeight - circleSide)), width: circleSide, height: circleSide)
+        
+        let circleSide = Int(circleView.bounds.size.width)
+        
+        circleView.frame = CGRect(x: Int.random(in: 1 ..< (safeAreaWidth - circleSide)), y: Int.random(in: (smth + circleSide) ..< (safeAreaHeight - circleSide)), width: circleSide, height: circleSide)
         circleView.backgroundColor =  UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1)
         view.addSubview(circleView)
+        UIView.animate(withDuration: 2.0) {
+            self.circleView.transform = CGAffineTransform(scaleX: 0.5, y: 1.5)
+        } completion: { _ in
+            self.circleView.transform = .identity
         }
+    }
     
-//    @objc func circleLongPressed(_ gesture: UILongPressGestureRecognizer) {
-//        UIView.animate(withDuration: 2.0) {
-//                   self.circleView.transform = CGAffineTransform(scaleX: 0.5, y: 1.5)
-//               }
-//        UIView.animate(withDuration: 2.0) {
-//            self.circleView.transform = CGAffineTransform(scaleX: 0, y: 0)
-//               }
-        }
+
+}
     
 
 
@@ -91,9 +89,5 @@ extension ViewController {
         
         tapGesture.addTarget(self, action: #selector(circleTapped))
         circleView.addGestureRecognizer(tapGesture)
-//        longPressGesture.addTarget(self, action: #selector(circleLongPressed))
-//        circleView.addGestureRecognizer(longPressGesture)
-        
-        
     }
 }
